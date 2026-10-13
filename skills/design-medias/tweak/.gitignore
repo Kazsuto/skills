@@ -1,0 +1,9 @@
+# Personal data written at runtime
+donnees/mes-palettes.json
+donnees/correspondances.json
+# Refero DESIGN.md text: imported locally, not redistributed
+donnees/styles/*/design-md.txt
+# Local Playwright install for tester-styles.cjs
+node_modules/
+package.json
+package-lock.json

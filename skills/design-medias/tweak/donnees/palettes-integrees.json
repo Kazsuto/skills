@@ -1,0 +1,111 @@
+{
+  "roles": [
+    "background",
+    "surface",
+    "surfaceTint",
+    "surfaceStrong",
+    "text",
+    "textMuted",
+    "border",
+    "borderStrong",
+    "primary",
+    "accent",
+    "success",
+    "warning",
+    "error"
+  ],
+  "derivation": "Un rôle absent est dérivé des couleurs de la palette (scripts/panel.js, completePalette) : accent = primaire, fond teinté = 10 % du primaire dans le fond, contour marqué = primaire, filets et surface = texte mêlé au fond. Seuls succès, alerte et erreur gardent la couleur du document.",
+  "palettes": [
+    {
+      "id": "radix",
+      "nom": "Radix · Slate et Indigo",
+      "caractere": "Neutre froid, précis, produit et tech",
+      "source": "https://raw.githubusercontent.com/radix-ui/colors/main/src/light.ts",
+      "licence": "MIT",
+      "lisibilite": "ok",
+      "notes": "Fond teinté indigo-3, contour indigo-8. Alerte amber-11 à 4,497:1, juste sous le seuil AA.",
+      "roles": {
+        "background": "#fcfcfd",
+        "surface": "#f9f9fb",
+        "surfaceTint": "#edf2fe",
+        "surfaceStrong": "#1c2024",
+        "text": "#1c2024",
+        "textMuted": "#60646c",
+        "border": "#d9d9e0",
+        "borderStrong": "#8da4ef",
+        "primary": "#3a5bc7",
+        "accent": "#3e63dd",
+        "success": "#218358",
+        "warning": "#ab6400",
+        "error": "#ce2c31"
+      }
+    },
+    {
+      "id": "primer",
+      "nom": "GitHub Primer",
+      "caractere": "Neutre froid et familier, qualité documentation",
+      "source": "https://unpkg.com/@primer/primitives/dist/css/functional/themes/light.css",
+      "licence": "MIT",
+      "lisibilite": "ok",
+      "notes": "Fond teinté et contour repris des encadrés « Note » de GitHub.",
+      "roles": {
+        "background": "#ffffff",
+        "surface": "#f6f8fa",
+        "surfaceTint": "#ddf4ff",
+        "surfaceStrong": "#25292e",
+        "text": "#1f2328",
+        "textMuted": "#59636e",
+        "border": "#d1d9e0",
+        "borderStrong": "#0969da",
+        "primary": "#0969da",
+        "success": "#1a7f37",
+        "warning": "#9a6700",
+        "error": "#d1242f"
+      }
+    },
+    {
+      "id": "shadcn-neutral",
+      "nom": "shadcn · Neutral",
+      "caractere": "Monochrome et minimal, noir sur blanc",
+      "source": "https://ui.shadcn.com/docs/theming",
+      "licence": "MIT",
+      "lisibilite": "ok",
+      "notes": "shadcn ne définit ni succès ni alerte : ces rôles gardent les couleurs du document.",
+      "roles": {
+        "background": "#ffffff",
+        "surface": "#f5f5f5",
+        "surfaceTint": "#f5f5f5",
+        "surfaceStrong": "#171717",
+        "text": "#0a0a0a",
+        "textMuted": "#737373",
+        "border": "#e5e5e5",
+        "borderStrong": "#171717",
+        "primary": "#171717",
+        "error": "#e7000b"
+      }
+    },
+    {
+      "id": "material-3",
+      "nom": "Material 3 · Baseline",
+      "caractere": "Neutres teintés lavande, amical, Google",
+      "source": "https://unpkg.com/@material/web/tokens/versions/v0_192/_md-sys-color.scss",
+      "licence": "Apache-2.0",
+      "lisibilite": "ok",
+      "notes": "Fond teinté = primary-container, contour = outline. Ni succès ni alerte dans Material 3.",
+      "roles": {
+        "background": "#fef7ff",
+        "surface": "#f3edf7",
+        "surfaceTint": "#eaddff",
+        "surfaceStrong": "#322f35",
+        "text": "#1d1b20",
+        "textMuted": "#49454f",
+        "border": "#cac4d0",
+        "borderStrong": "#79747e",
+        "primary": "#6750a4",
+        "accent": "#7d5260",
+        "error": "#b3261e"
+      }
+    }
+  ],
+  "style": "Champ facultatif « style » : titres, texte et code (famille de donnees/polices.json), arrondi des blocs, interligne du texte courant. Appliqué seulement en mode « Style complet ». Code : la mono de la marque quand Refero la donne (Geist Mono) ; Berkeley Mono (Linear, Cursor) devient JetBrains Mono et Commit Mono (Resend) Fragment Mono, faute de licence ou de version Google ; sans mono dans la source, la pile système « Mono code »."
+}

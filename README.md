@@ -22,6 +22,10 @@ Copier le dossier d'un skill dans `~/.claude/skills/` (Claude Code) ou `~/.agent
 
 Les skills sont rangés par catégorie dans `skills/<catégorie>/<skill>/`. Les outils les lisent à plat : chaque nom de skill est unique dans tout le dépôt.
 
+| Catégorie | Contenu | Skills |
+| --- | --- | --- |
+| `design-medias` | Design, images, logos, présentations | [tweak](skills/design-medias/tweak/README.md) |
+
 ## Licence
 
 [MIT](LICENSE)
