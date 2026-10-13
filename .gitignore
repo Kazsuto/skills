@@ -1,0 +1,22 @@
+# Données écrites par les skills à l'exécution : elles restent locales.
+state.json
+etat.json
+*.log
+*.jsonl
+
+# Secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Dépendances et caches
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Fichiers temporaires de Syncthing
+*.sync-conflict-*
+.syncthing.*.tmp
+~syncthing~*
