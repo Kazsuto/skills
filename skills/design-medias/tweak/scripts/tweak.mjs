@@ -21,6 +21,7 @@ const USER_PALETTES = path.join(DATA_DIR, 'mes-palettes.json');
 const ROLE_MAPPINGS = path.join(DATA_DIR, 'correspondances.json');
 const FONT_CATALOG = path.join(DATA_DIR, 'polices.json');
 const IDLE_LIMIT_MS = 3 * 60 * 60 * 1000; // a hand-tuning session rarely lasts hours; frees the port if forgotten
+const CLOSE_GRACE_MS = 10000; // the last tab closed: long enough for a reload to reconnect
 const MAX_BODY_BYTES = 1024 * 1024; // a bake payload is a few kilobytes; anything larger is not ours
 const MAX_VALUE_LENGTH = 300; // longest custom property value accepted from the panel
 const MAX_USER_PALETTES = 200; // far above real use; stops a runaway script from filling the file
@@ -421,6 +422,8 @@ const token = crypto.randomBytes(18).toString('base64url');
 const mode = args.explore ? 'explore' : 'normal';
 let servedHash = null;
 let idleTimer = null;
+let openTabs = 0;
+let closeTimer = null;
 
 function finish(summary) {
   console.log(JSON.stringify(summary));
@@ -431,6 +434,18 @@ function finish(summary) {
 function resetIdle() {
   clearTimeout(idleTimer);
   idleTimer = setTimeout(() => finish({ ok: true, ended: 'idle', changed: false, file }), IDLE_LIMIT_MS);
+}
+
+// Each open tab holds one event stream; when the last one closes and none comes back, the session ends.
+function trackTab(req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+  res.write(': ok\n\n');
+  openTabs += 1;
+  clearTimeout(closeTimer);
+  req.on('close', () => {
+    openTabs -= 1;
+    if (openTabs === 0) closeTimer = setTimeout(() => finish({ ok: true, ended: 'closed', changed: false, file }), CLOSE_GRACE_MS);
+  });
 }
 
 function send(res, status, type, body) {
@@ -541,6 +556,7 @@ const server = http.createServer(async (req, res) => {
     send(res, 200, 'application/json', JSON.stringify({ ok: true }));
     return finish({ ok: true, ended: 'exit', changed: false, file });
   }
+  if (req.method === 'GET' && rel === '__tweak/presence') return trackTab(req, res);
   if (req.method !== 'GET') return send(res, 405, 'text/plain', 'Méthode refusée');
   if (rel === '__tweak/panel.js') return send(res, 200, MIME['.js'], fs.readFileSync(PANEL_FILE));
   if (rel === docName) {

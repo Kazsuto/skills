@@ -52,6 +52,7 @@ Options : `--explore` (essai et proposition, le document n'est pas modifié), `-
 
 - **Mode normal** : un clic sur Enregistrer écrit un bloc `<style id="tweak-overrides">` dans le document. Une copie horodatée part avant dans `<nom>.tweak/sauvegardes/`.
 - **Mode exploration** : produit `<nom>.essai-<date>.html` et une proposition en Markdown, sans toucher au document.
+- **Fermer l'onglet** termine la session sans rien écrire. Si des réglages ne sont pas enregistrés, le navigateur demande d'abord confirmation.
 
 Le panneau règle les variables CSS déclarées sur `:root`. Un HTML plein de valeurs en dur gagne à être factorisé d'abord (couleurs, tailles, interligne, largeur du texte) ; l'agent le propose.
 
@@ -64,7 +65,7 @@ Le panneau règle les variables CSS déclarées sur `:root`. Un HTML plein de va
 
 ## Limites et reste à faire
 
-- Les limites connues sont listées dans [SKILL.md](SKILL.md) : variables hors `:root`, règles `@page`, chemins absolus `file:///` qui ne se chargent pas, césure selon le navigateur.
+- Les limites connues sont listées dans [references/fonctionnement.md](references/fonctionnement.md) : variables hors `:root`, règles `@page`, chemins absolus `file:///` qui ne se chargent pas, césure selon le navigateur.
 - L'import dépend du format actuel des pages Refero. Si Refero le change, le script s'arrête avec un message au lieu d'écrire un style faux.
 - `tester-styles.cjs` demande au moins un style importé.
 

@@ -1553,6 +1553,8 @@ input.invalid{border-color:var(--warn)!important}
   $('print').addEventListener('click', () => window.print());
 
   function lockPanel(message) {
+    presence?.close();
+    window.removeEventListener('beforeunload', warnUnsaved);
     for (const node of shadow.querySelectorAll('input,select,button')) if (node.id !== 'collapse') node.disabled = true;
     stopPicking();
     setStatus(message);
@@ -1667,6 +1669,7 @@ input.invalid{border-color:var(--warn)!important}
     buildAdvanced(result.unreadable);
     renderMappingBar();
     committed = snapshot();
+    opened = committed;
     render();
     syncAll();
     const active = vars.filter((v) => v.effect > 0).length;
@@ -1688,6 +1691,19 @@ input.invalid{border-color:var(--warn)!important}
     }
     return [...found].slice(0, 12);
   }
+
+  // Keeps the server alive while this tab is open: closing the tab ends the session without writing.
+  let presence = null;
+  try { presence = new EventSource(api('presence')); } catch { /* old browser: the idle limit still frees the port */ }
+
+  // Closing or reloading the tab drops the panel's state, so the browser asks first while changes are unsaved.
+  let opened = '';
+  function warnUnsaved(event) {
+    if (!opened || snapshot() === opened) return;
+    event.preventDefault();
+    event.returnValue = ''; // older Chrome and Safari show the prompt only when this is set
+  }
+  window.addEventListener('beforeunload', warnUnsaved);
 
   const start = () => init().catch((error) => setStatus(`Panneau non initialisé : ${error.message}`, true));
   if (document.readyState === 'complete') start();
